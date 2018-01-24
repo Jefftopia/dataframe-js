@@ -851,7 +851,7 @@ class DataFrame {
     }
 
     /**
-     * Sort DataFrame rows based on column values. The row should contains only one variable type.
+     * Sort DataFrame rows based on column values. The row should contains only one variable type. Columns are sorted left-to-right.
      * @param {String | Array<string>} columnNames The columns giving order.
      * @param {Boolean} [reverse=false] Reverse mode. Reverse the order if true.
      * @returns {DataFrame} An ordered DataFrame.
@@ -861,12 +861,8 @@ class DataFrame {
      * df.sortBy(['id1'], true)
     */
     sortBy(columnNames, reverse = false) {
-        let _columnNames = columnNames;
-        if (!Array.isArray(_columnNames)) { _columnNames = [_columnNames]; }
-
         // ensure unique columns
-        const tmp = new Set(_columnNames);
-        _columnNames = Array.from(tmp);
+        const _columnNames = Array.from(new Set(asArray(columnNames)));
 
         const sortedRows = this[__rows__].sort((p, n) => {
             return _columnNames.map((col) => {

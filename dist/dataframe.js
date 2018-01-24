@@ -10217,7 +10217,7 @@ var dfjs =
 	        }
 
 	        /**
-	         * Sort DataFrame rows based on column values. The row should contains only one variable type.
+	         * Sort DataFrame rows based on column values. The row should contains only one variable type. Columns are sorted left-to-right.
 	         * @param {String | Array<string>} columnNames The columns giving order.
 	         * @param {Boolean} [reverse=false] Reverse mode. Reverse the order if true.
 	         * @returns {DataFrame} An ordered DataFrame.
@@ -10232,14 +10232,8 @@ var dfjs =
 	        value: function sortBy(columnNames) {
 	            var reverse = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
-	            var _columnNames = columnNames;
-	            if (!Array.isArray(_columnNames)) {
-	                _columnNames = [_columnNames];
-	            }
-
 	            // ensure unique columns
-	            var tmp = new _set2['default'](_columnNames);
-	            _columnNames = (0, _from2['default'])(tmp);
+	            var _columnNames = (0, _from2['default'])(new _set2['default']((0, _reusables.asArray)(columnNames)));
 
 	            var sortedRows = this[__rows__].sort(function (p, n) {
 	                return _columnNames.map(function (col) {
